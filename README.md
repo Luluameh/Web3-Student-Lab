@@ -55,8 +55,9 @@ We love our contributors! This project is being built for students, by students 
 
 To start contributing:
 1. Read our [Contribution Guidelines](CONTRIBUTING.md).
-2. Check out our existing [Issues](https://github.com/your-repo/issues) or look for the `good first issue` label.
-3. Fork the repository and submit a Pull Request!
+2. Review our [Security Best Practices](docs/SECURITY.md).
+3. Check out our existing [Issues](https://github.com/your-repo/issues) or look for the `good first issue` label.
+4. Fork the repository and submit a Pull Request!
 
 ## 📜 License
 
