@@ -19,7 +19,10 @@ If this is something you think you can fix, then fork Web3 Student Lab and creat
 
 ## 4. Implement your fix or feature
 
-At this point, you're ready to make your changes! Feel free to ask for help; everyone is a beginner at first.
+At this point, you're ready to make your changes! Feel free to ask for help; everyone is a beginner at first. 
+
+> [!IMPORTANT]
+> Please review our [Security Best Practices](docs/SECURITY.md) and [CI/CD Pipeline Guide](docs/CICD_GUIDE.md) before making any changes related to secrets, sensitive data, or smart contracts.
 
 ## 5. Make a Pull Request
 
