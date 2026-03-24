@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { requestLogger } from './middleware/requestLogger.js';
 import authRoutes from './routes/auth/auth.routes';
 import learningRoutes from './routes/learning/learning.routes';
 import routes from './routes/index.js';
@@ -13,6 +14,7 @@ const port = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
+app.use(requestLogger);
 
 // Health check endpoint
 app.get('/health', (req: Request, res: Response) => {
