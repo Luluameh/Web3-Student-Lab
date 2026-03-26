@@ -23,7 +23,7 @@ export class GeneratorService {
   async generateProjectIdea(
     theme: string,
     techStack: string[],
-    difficulty: string,
+    difficulty: string
   ): Promise<ProjectIdea> {
     const prompt = `
       As an expert Web3 and Software Architect, generate a unique and innovative hackathon project idea.

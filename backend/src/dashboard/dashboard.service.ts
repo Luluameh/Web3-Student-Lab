@@ -39,19 +39,19 @@ export const getStudentDashboard = async (studentId: string): Promise<StudentDas
           description: 'On-chain verified: 0x123...abc',
           date: new Date(),
           type: 'certificate',
-          hash: '0x1234567890abcdef'
-        }
+          hash: '0x1234567890abcdef',
+        },
       ],
       tokenBalance: {
         symbol: 'W3SL',
         balance: 50.5,
-        lastUpdated: new Date()
+        lastUpdated: new Date(),
       },
       recentActivity: [
         'Joined Web3 Student Lab',
         'Completed Web3 Fundamentals',
-        'Earned 50 W3SL tokens'
-      ]
+        'Earned 50 W3SL tokens',
+      ],
     };
   }
 

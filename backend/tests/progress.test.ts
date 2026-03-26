@@ -36,7 +36,9 @@ describe('Course Progress Persistence', () => {
         },
       });
 
-      const response = await request(app).get('/api/learning/progress/student-existing').expect(200);
+      const response = await request(app)
+        .get('/api/learning/progress/student-existing')
+        .expect(200);
 
       expect(response.body.progress.userId).toBe('student-existing');
       expect(response.body.progress.completedLessons).toEqual(['lesson-1', 'lesson-2']);
@@ -78,7 +80,7 @@ describe('Course Progress Persistence', () => {
         .expect(200);
 
       expect(response.body.progress.completedLessons).toEqual(
-        expect.arrayContaining(['lesson-1', 'lesson-2']),
+        expect.arrayContaining(['lesson-1', 'lesson-2'])
       );
       expect(response.body.progress.percentage).toBe(50); // 2 of 4 lessons
     });
@@ -97,7 +99,7 @@ describe('Course Progress Persistence', () => {
         .expect(200);
 
       const count = response.body.progress.completedLessons.filter(
-        (id: string) => id === 'lesson-1',
+        (id: string) => id === 'lesson-1'
       ).length;
       expect(count).toBe(1);
     });

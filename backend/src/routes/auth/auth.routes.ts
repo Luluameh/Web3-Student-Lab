@@ -59,11 +59,11 @@ router.post('/login', async (req: Request, res: Response) => {
           email: email,
           firstName: 'Demo',
           lastName: 'Student',
-        }
+        },
       });
       return;
     }
-    
+
     if (error instanceof Error && error.message === 'Invalid credentials') {
       res.status(401).json({ error: error.message });
       return;

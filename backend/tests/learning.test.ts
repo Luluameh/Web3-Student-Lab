@@ -19,11 +19,13 @@ describe('Learning Module Integration Tests', () => {
       expect(response.body).toHaveProperty('modules');
 
       // Check that all returned lessons are beginner level
-      response.body.modules.forEach((module: Record<string, unknown> & { lessons: Record<string, unknown>[] }) => {
-        module.lessons.forEach((lesson: Record<string, unknown>) => {
-          expect(lesson.difficulty).toBe('beginner');
-        });
-      });
+      response.body.modules.forEach(
+        (module: Record<string, unknown> & { lessons: Record<string, unknown>[] }) => {
+          module.lessons.forEach((lesson: Record<string, unknown>) => {
+            expect(lesson.difficulty).toBe('beginner');
+          });
+        }
+      );
     });
 
     it('should return modules with correct structure', async () => {
@@ -143,7 +145,7 @@ describe('Learning Module Integration Tests', () => {
 
       // Count occurrences of lesson-1
       const occurrences = response.body.progress.completedLessons.filter(
-        (id: string) => id === lessonId,
+        (id: string) => id === lessonId
       ).length;
 
       expect(occurrences).toBe(1);

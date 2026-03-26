@@ -19,11 +19,11 @@ export const updateProgress = async (
   studentId: string,
   lessonId: string,
   moduleId: string = 'mod-1',
-  totalLessons: number = 4,
+  totalLessons: number = 4
 ): Promise<Progress> => {
   const progress = await recordStageCompletion(
     { studentId, stageId: lessonId, moduleId },
-    totalLessons,
+    totalLessons
   );
   return {
     userId: progress.userId,

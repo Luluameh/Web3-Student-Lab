@@ -30,7 +30,7 @@ export const getTokenBalance = async (studentId: string): Promise<TokenWallet> =
 
 export const grantTokens = async (
   studentId: string,
-  amount: number,
+  amount: number
 ): Promise<{ success: boolean }> => {
   // logic to record token grants/transfers
   console.log(`Granting ${amount} STUD tokens to student ${studentId}`);

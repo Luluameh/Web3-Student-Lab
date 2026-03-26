@@ -75,7 +75,7 @@ export async function getProgress(studentId: string): Promise<StudentProgress> {
  */
 export async function recordStageCompletion(
   input: RecordStageInput,
-  totalLessons: number,
+  totalLessons: number
 ): Promise<StudentProgress> {
   const { studentId, stageId, moduleId } = input;
 
@@ -99,7 +99,9 @@ export async function recordStageCompletion(
 
   completedLessons.push(stageId);
   const percentage =
-    totalLessons > 0 ? Math.min(100, Math.round((completedLessons.length / totalLessons) * 100)) : 0;
+    totalLessons > 0
+      ? Math.min(100, Math.round((completedLessons.length / totalLessons) * 100))
+      : 0;
 
   const record = await prisma.learningProgress.upsert({
     where: { userId: studentId },
