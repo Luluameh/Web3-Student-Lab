@@ -1,5 +1,7 @@
 #![no_std]
 
+pub mod payment_gateway;
+pub mod staking;
 pub mod fuzz;
 pub mod token;
 
