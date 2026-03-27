@@ -1,6 +1,8 @@
 # 🐙 Git Workflow & Contribution Guide
 
-Welcome to the Web3 Student Lab! To keep our codebase clean, professional, and easy to maintain, we follow a standardized Git workflow. Whether you are a first-time contributor or an experienced developer, please follow these steps.
+Welcome to the Web3 Student Lab! To keep our codebase clean, professional, and easy to maintain, we
+follow a standardized Git workflow. Whether you are a first-time contributor or an experienced
+developer, please follow these steps.
 
 ## 1. Local Environment Setup
 

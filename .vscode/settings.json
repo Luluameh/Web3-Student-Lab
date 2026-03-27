@@ -30,6 +30,9 @@
   // Prettier Settings
   "prettier.configPath": ".prettierrc",
   "prettier.ignorePath": ".prettierignore",
+  "prettier.enable": true,
+  "prettier.eslintIntegration": true,
+  "prettier.requireConfig": true,
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

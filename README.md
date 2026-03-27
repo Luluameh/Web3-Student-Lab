@@ -4,9 +4,11 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
-**Web3 Student Lab** is an open-source educational platform that helps students learn blockchain, smart contracts, open-source collaboration, and hackathon project development in one place.
+**Web3 Student Lab** is an open-source educational platform that helps students learn blockchain,
+smart contracts, open-source collaboration, and hackathon project development in one place.
 
-The platform provides **interactive tools, coding environments, and guided learning paths** designed for beginners and university students.
+The platform provides **interactive tools, coding environments, and guided learning paths** designed
+for beginners and university students.
 
 ## � Frequently Asked Questions
 
@@ -14,11 +16,16 @@ The platform provides **interactive tools, coding environments, and guided learn
 
 ## �🚀 Core Modules
 
-1. **Blockchain Learning Simulator**: Visually learn how blockchains work (create transactions, mine blocks, view hashes, and see how blocks connect).
-2. **Smart Contract Playground**: Write, run, and test smart contracts directly in your browser. Focuses on Soroban contracts written in Rust.
-3. **Web3 Learning Roadmap**: A guided path spanning programming fundamentals, cryptography, blockchain architecture, smart contracts, and full Web3 applications.
-4. **Hackathon Project Idea Generator**: Overcome coder's block by generating ideas based on technology and sector preferences.
-5. **Open Source Contribution Trainer**: Get hands-on with Git, simulated GitHub issues, and PR exercises to confidently contribute to open source.
+1. **Blockchain Learning Simulator**: Visually learn how blockchains work (create transactions, mine
+   blocks, view hashes, and see how blocks connect).
+2. **Smart Contract Playground**: Write, run, and test smart contracts directly in your browser.
+   Focuses on Soroban contracts written in Rust.
+3. **Web3 Learning Roadmap**: A guided path spanning programming fundamentals, cryptography,
+   blockchain architecture, smart contracts, and full Web3 applications.
+4. **Hackathon Project Idea Generator**: Overcome coder's block by generating ideas based on
+   technology and sector preferences.
+5. **Open Source Contribution Trainer**: Get hands-on with Git, simulated GitHub issues, and PR
+   exercises to confidently contribute to open source.
 
 ## 🛠 Technology Stack
 
@@ -50,7 +57,8 @@ timeline
 
 ### Phase 1: Discovery 🔍
 
-**Objective:** Define the core platform architecture, validate learning mechanisms, and design the initial curriculum.
+**Objective:** Define the core platform architecture, validate learning mechanisms, and design the
+initial curriculum.
 
 - **Milestones:**
   - [x] Initial repository setup and architecture planning
@@ -59,7 +67,8 @@ timeline
 
 ### Phase 2: Development 🛠️
 
-**Objective:** Build out the core modules, integrate blockchain functionalities, and develop the interactive playground.
+**Objective:** Build out the core modules, integrate blockchain functionalities, and develop the
+interactive playground.
 
 - **Milestones:**
   - [ ] Implement Next.js + Tailwind frontend
@@ -68,7 +77,8 @@ timeline
 
 ### Phase 3: Deployment 🚀
 
-**Objective:** Launch the MVP, onboard the first cohort of students, and gather metrics for future iterations.
+**Objective:** Launch the MVP, onboard the first cohort of students, and gather metrics for future
+iterations.
 
 - **Milestones:**
   - [ ] Deploy backend and database to cloud infrastructure
@@ -95,7 +105,8 @@ web3-student-lab/
 
 ## 🐳 Getting Started with Docker
 
-The easiest way to set up the local development environment (backend and database) is using Docker Compose.
+The easiest way to set up the local development environment (backend and database) is using Docker
+Compose.
 
 ### Prerequisites
 
@@ -120,16 +131,19 @@ The easiest way to set up the local development environment (backend and databas
 
 ## 🤝 Rules for Contributors
 
-We love our contributors! This project is being built for students, by students and open-source enthusiasts.
+We love our contributors! This project is being built for students, by students and open-source
+enthusiasts.
 
-> **Important:** Please add an ETA (no more than 2 days) when expressing interest in an issue to help us keep development moving quickly.
+> **Important:** Please add an ETA (no more than 2 days) when expressing interest in an issue to
+> help us keep development moving quickly.
 
 To start contributing:
 
 1. Read our [Contribution Guidelines](CONTRIBUTING.md).
 2. Review our [Security Best Practices](docs/SECURITY.md).
 3. Read the [CI/CD Pipeline Guide](docs/CICD_GUIDE.md).
-4. Check out our existing [Issues](https://github.com/your-repo/issues) or look for the `good first issue` label.
+4. Check out our existing [Issues](https://github.com/your-repo/issues) or look for the
+   `good first issue` label.
 5. Fork the repository and submit a Pull Request!
 
 ## 📜 License

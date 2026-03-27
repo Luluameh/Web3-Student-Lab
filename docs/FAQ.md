@@ -1,6 +1,7 @@
 # FAQ: Environment Setup for Web3 Student Lab
 
-Welcome! This FAQ is designed to help students quickly resolve common setup issues for Node.js, Rust, and Git. The tone is supportive — you’re doing great, and every install step is progress.
+Welcome! This FAQ is designed to help students quickly resolve common setup issues for Node.js,
+Rust, and Git. The tone is supportive — you’re doing great, and every install step is progress.
 
 ---
 
@@ -10,7 +11,8 @@ Welcome! This FAQ is designed to help students quickly resolve common setup issu
 
 - Cause: Node.js is not installed or not in your PATH.
 - Fix:
-  - On macOS/Linux: `curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -` then `sudo apt-get install -y nodejs` (Ubuntu/Debian) or use `brew install node` (macOS).
+  - On macOS/Linux: `curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -` then
+    `sudo apt-get install -y nodejs` (Ubuntu/Debian) or use `brew install node` (macOS).
   - On Windows: install from https://nodejs.org and restart your terminal.
   - Verify with: `node --version` and `npm --version`.
 
@@ -19,7 +21,8 @@ Welcome! This FAQ is designed to help students quickly resolve common setup issu
 - Cause: run command in wrong directory or with project already using different package manager.
 - Fix:
   - `cd /workspaces/Web3-Student-Lab` first.
-  - Use `npm install` if `package-lock.json` exists, `pnpm install` if using `pnpm-lock.yaml`, or `yarn install` for `yarn.lock`.
+  - Use `npm install` if `package-lock.json` exists, `pnpm install` if using `pnpm-lock.yaml`, or
+    `yarn install` for `yarn.lock`.
   - Remove conflicting lock files only if you intentionally switch managers.
 
 ### 1.3 Compatibility issues (Node version too old/new)
@@ -47,7 +50,8 @@ Welcome! This FAQ is designed to help students quickly resolve common setup issu
 - Cause: stale dependencies or incompatible toolchain.
 - Fix:
   - Update Rust toolchain: `rustup update`.
-  - Use project toolchain if `rust-toolchain.toml` exists: `rustup override set stable` (or specific version).
+  - Use project toolchain if `rust-toolchain.toml` exists: `rustup override set stable` (or specific
+    version).
   - Run: `cargo clean && cargo build`.
 
 ### 2.3 WebAssembly/Soroban compile issues (especially in contract path)
@@ -73,7 +77,8 @@ Welcome! This FAQ is designed to help students quickly resolve common setup issu
 
 - Cause: missing CA certs or corporate proxy.
 - Fix:
-  - Ensure `ca-certificates` package is installed (`sudo apt-get install ca-certificates`, `sudo update-ca-certificates`).
+  - Ensure `ca-certificates` package is installed (`sudo apt-get install ca-certificates`,
+    `sudo update-ca-certificates`).
   - For proxy, configure:
     - `git config --global http.proxy http://proxy.example.com:8080`
     - `git config --global https.proxy http://proxy.example.com:8080`
@@ -98,7 +103,8 @@ Welcome! This FAQ is designed to help students quickly resolve common setup issu
   - `rustc --version`
   - `cargo --version`
   - `git --version`
-- If issue persists, copy full command and error text, open a GitHub issue with screenshot and logs, and others can help quickly.
+- If issue persists, copy full command and error text, open a GitHub issue with screenshot and logs,
+  and others can help quickly.
 
 ---
 
@@ -106,4 +112,5 @@ Welcome! This FAQ is designed to help students quickly resolve common setup issu
 
 - Use `nvm` for Node versions and `rustup` for Rust toolchains to avoid wide system changes.
 - Keep a clean local branch for PR work: `git checkout -b feature/faq` and push to your fork.
-- You got this — each setup issue is a learning step that makes you a stronger open-source contributor.
+- You got this — each setup issue is a learning step that makes you a stronger open-source
+  contributor.

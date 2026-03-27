@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express';
+import { Router } from 'express';
 import dashboardRouter from '../dashboard/dashboard.routes.js';
 import feedbackRouter from '../feedback/feedback.routes.js';
 import userRouter from '../user/routes.js';
@@ -9,6 +9,7 @@ import enrollmentsRouter from './enrollments.js';
 import generatorRoutes from './generator/generator.routes.js';
 import learningRoutes from './learning/learning.routes.js';
 import studentsRouter from './students.js';
+import blockchainRouter from '../blockchain/balance.js';
 
 const router = Router();
 
@@ -24,9 +25,7 @@ router.use('/learning', learningRoutes);
 router.use('/generator', generatorRoutes);
 router.use('/user', userRouter);
 
-// Placeholder routes for future features
-router.get('/blockchain', (req: Request, res: Response) => {
-  res.json({ message: 'Blockchain feature - Full integration in progress' });
-});
+// Blockchain routes
+router.use('/blockchain', blockchainRouter);
 
 export default router;

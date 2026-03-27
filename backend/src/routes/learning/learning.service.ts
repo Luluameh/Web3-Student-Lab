@@ -1,16 +1,295 @@
-import { getProgress, recordCompletedStage } from '../../learning/progress.js';
-import { Progress } from './types.js';
+import prisma from '../../db/index.js';
+import { COURSES, curriculumByCourseId, getCurriculumForCourse } from './curriculum.data.js';
+import {
+  CurriculumCourse,
+  Module,
+  Progress,
+  ProgressStatus,
+  ProgressUpdateInput,
+} from './types.js';
 
-/**
- * Service to manage student progress in the learning platform.
- */
-export const getStudentProgress = async (studentId: string): Promise<Progress> => {
-  return await getProgress(studentId);
+// In-memory mock store for demo resilience
+const mockProgressStore: Record<string, Progress> = {};
+
+const toProgress = (progress: any): Progress => ({
+  id: progress.id,
+  studentId: progress.studentId,
+  courseId: progress.courseId,
+  completedLessons: progress.completedLessons || [],
+  currentModuleId: progress.currentModuleId,
+  percentage: progress.percentage || 0,
+  status: (progress.status as ProgressStatus) || 'not_started',
+  lastAccessedAt: progress.lastAccessedAt,
+  completedAt: progress.completedAt,
+  createdAt: progress.createdAt,
+  updatedAt: progress.updatedAt,
+});
+
+const filterModulesByDifficulty = (modules: Module[], difficulty?: string): Module[] => {
+  if (!difficulty) {
+    return modules;
+  }
+
+  return modules
+    .map((module) => ({
+      ...module,
+      lessons: module.lessons.filter((lesson) => lesson.difficulty === difficulty),
+    }))
+    .filter((module) => module.lessons.length > 0);
+};
+
+const countLessons = (modules: Module[]): number => {
+  return modules.reduce((total, module) => total + module.lessons.length, 0);
+};
+
+const buildCourseStatus = (completedLessonCount: number, totalLessons: number): ProgressStatus => {
+  if (completedLessonCount === 0) {
+    return 'not_started';
+  }
+
+  if (totalLessons > 0 && completedLessonCount >= totalLessons) {
+    return 'completed';
+  }
+
+  return 'in_progress';
+};
+
+const buildPercentage = (
+  completedLessonCount: number,
+  totalLessons: number,
+  explicitPercentage?: number
+): number => {
+  if (typeof explicitPercentage === 'number') {
+    return explicitPercentage;
+  }
+
+  if (totalLessons === 0) {
+    return 0;
+  }
+
+  return Math.round((completedLessonCount / totalLessons) * 100);
 };
 
 /**
- * Updates student progress by recording a completed lesson.
+ * List all courses with optional difficulty filter.
+ * Resilient: Falls back to hardcoded COURSES if database fails.
  */
-export const updateProgress = async (studentId: string, lessonId: string): Promise<Progress> => {
-  return await recordCompletedStage(studentId, lessonId);
+export const listCourses = async (difficulty?: string): Promise<CurriculumCourse[]> => {
+  try {
+    const courses = await prisma.course.findMany({
+      orderBy: { createdAt: 'asc' },
+    });
+
+    return courses.map((course: any) => ({
+      ...course,
+      modules: filterModulesByDifficulty(getCurriculumForCourse(course.id), difficulty),
+    }));
+  } catch (error) {
+    console.warn('Database error in listCourses, falling back to mock data');
+    const now = new Date();
+    return COURSES.map((course) => ({
+      ...course,
+      description: course.description || null,
+      instructor: 'Web3 Student Lab',
+      credits: 10,
+      createdAt: now,
+      updatedAt: now,
+      modules: filterModulesByDifficulty(getCurriculumForCourse(course.id), difficulty),
+    }));
+  }
+};
+
+/**
+ * Get curriculum for a specific course.
+ * Resilient: Falls back to curriculumByCourseId if database fails.
+ */
+export const getCourseCurriculum = async (
+  courseId: string,
+  difficulty?: string
+): Promise<CurriculumCourse | null> => {
+  try {
+    const course = await prisma.course.findUnique({
+      where: { id: courseId },
+    });
+
+    if (!course) {
+      // Check if course exists in our mock data
+      const mockCourse = COURSES.find((c) => c.id === courseId);
+      if (mockCourse) {
+        const now = new Date();
+        return {
+          ...mockCourse,
+          description: mockCourse.description || null,
+          instructor: 'Web3 Student Lab',
+          credits: 10,
+          createdAt: now,
+          updatedAt: now,
+          modules: filterModulesByDifficulty(getCurriculumForCourse(courseId), difficulty),
+        };
+      }
+      return null;
+    }
+
+    return {
+      ...course,
+      modules: filterModulesByDifficulty(getCurriculumForCourse(course.id), difficulty),
+    };
+  } catch (error) {
+    console.warn('Database error in getCourseCurriculum, falling back to mock data');
+    const mockCourse = COURSES.find((c) => c.id === courseId);
+    if (!mockCourse) return null;
+
+    const now = new Date();
+    return {
+      ...mockCourse,
+      description: mockCourse.description || null,
+      instructor: 'Web3 Student Lab',
+      credits: 10,
+      createdAt: now,
+      updatedAt: now,
+      modules: filterModulesByDifficulty(getCurriculumForCourse(courseId), difficulty),
+    };
+  }
+};
+
+/**
+ * Get student progress for a course.
+ * Resilient: Falls back to in-memory mockProgressStore if database fails.
+ */
+export const getStudentProgress = async (
+  studentId: string,
+  courseId: string
+): Promise<Progress> => {
+  const key = `${studentId}:${courseId}`;
+
+  try {
+    const progress = await prisma.learningProgress.findUnique({
+      where: {
+        studentId_courseId: {
+          studentId,
+          courseId,
+        },
+      },
+    });
+
+    if (progress) {
+      const p = toProgress(progress);
+      mockProgressStore[key] = p; // Sync cache
+      return p;
+    }
+  } catch (error) {
+    console.warn('Database error in getStudentProgress, using mock store');
+  }
+
+  // Fallback to mock store
+  if (mockProgressStore[key]) {
+    return mockProgressStore[key];
+  }
+
+  // Initial progress if nothing found anywhere
+  const now = new Date();
+  const initialProgress: Progress = {
+    id: `progress-${studentId}-${courseId}`,
+    studentId,
+    courseId,
+    completedLessons: [],
+    currentModuleId: getCurriculumForCourse(courseId)[0]?.id ?? null,
+    percentage: 0,
+    status: 'not_started',
+    lastAccessedAt: now,
+    completedAt: null,
+    createdAt: now,
+    updatedAt: now,
+  };
+
+  mockProgressStore[key] = initialProgress;
+  return initialProgress;
+};
+
+/**
+ * Update student progress for a lesson.
+ * Resilient: Falls back to in-memory mockProgressStore if database fails.
+ */
+export const updateStudentProgress = async (
+  studentId: string,
+  courseId: string,
+  input: ProgressUpdateInput
+): Promise<Progress> => {
+  const modules = getCurriculumForCourse(courseId);
+  const lesson = modules
+    .flatMap((module) => module.lessons)
+    .find((entry) => entry.id === input.lessonId);
+
+  if (!lesson) {
+    throw new Error('LESSON_NOT_FOUND');
+  }
+
+  const moduleForLesson = modules.find((module) =>
+    module.lessons.some((entry) => entry.id === input.lessonId)
+  );
+  const totalLessons = countLessons(modules);
+  const existingProgress = await getStudentProgress(studentId, courseId);
+
+  const completedLessonSet = new Set(existingProgress.completedLessons);
+
+  if (input.status === 'completed') {
+    completedLessonSet.add(input.lessonId);
+  } else {
+    completedLessonSet.delete(input.lessonId);
+  }
+
+  const completedLessons = Array.from(completedLessonSet);
+  const percentage = buildPercentage(completedLessons.length, totalLessons, input.percentage);
+  const status = buildCourseStatus(completedLessons.length, totalLessons);
+  const completedAt = status === 'completed' ? new Date() : null;
+  const now = new Date();
+
+  // Update in-memory cache
+  const updatedProgress: Progress = {
+    ...existingProgress,
+    completedLessons,
+    currentModuleId: moduleForLesson?.id ?? existingProgress.currentModuleId,
+    percentage,
+    status,
+    lastAccessedAt: now,
+    completedAt,
+    updatedAt: now,
+  };
+
+  const key = `${studentId}:${courseId}`;
+  mockProgressStore[key] = updatedProgress;
+
+  try {
+    const progress = await prisma.learningProgress.upsert({
+      where: {
+        studentId_courseId: {
+          studentId,
+          courseId,
+        },
+      },
+      update: {
+        completedLessons,
+        currentModuleId: updatedProgress.currentModuleId,
+        percentage,
+        status,
+        lastAccessedAt: now,
+        completedAt,
+      },
+      create: {
+        studentId,
+        courseId,
+        completedLessons,
+        currentModuleId: updatedProgress.currentModuleId,
+        percentage,
+        status,
+        lastAccessedAt: now,
+        completedAt,
+      },
+    });
+
+    return toProgress(progress);
+  } catch (error) {
+    console.warn('Database error in updateStudentProgress, updated in mock store only');
+    return updatedProgress;
+  }
 };

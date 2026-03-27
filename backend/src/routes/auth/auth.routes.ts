@@ -2,9 +2,8 @@ import { Request, Response, Router } from 'express';
 import { authenticate } from '../../auth/auth.middleware.js';
 import { login, register } from '../../auth/auth.service.js';
 import { LoginRequest } from '../../auth/types.js';
-import { registerSchema } from '../../auth/validation.schemas.js';
+import { loginSchema, registerSchema } from '../../auth/validation.schemas.js';
 import { validateRequest } from '../../utils/validation.js';
-import logger from '../../utils/logger.js';
 
 const router = Router();
 
@@ -19,7 +18,12 @@ router.post('/register', validateRequest(registerSchema), async (req: Request, r
     const { email, password, firstName, lastName } = req.body;
 
     // Register the student
-    const authResponse = await register({ email, password, firstName, lastName });
+    const authResponse = await register({
+      email,
+      password,
+      firstName,
+      lastName,
+    });
 
     res.status(201).json(authResponse);
   } catch (error) {
@@ -36,16 +40,10 @@ router.post('/register', validateRequest(registerSchema), async (req: Request, r
  * @desc    Login student
  * @access  Public
  */
-router.post('/login', async (req: Request, res: Response) => {
+router.post('/login', validateRequest(loginSchema), async (req: Request, res: Response) => {
   const { email, password }: LoginRequest = req.body;
 
   try {
-    // Validation
-    if (!email || !password) {
-      res.status(400).json({ error: 'Email and password are required' });
-      return;
-    }
-
     // Login the student
     const authResponse = await login({ email, password });
 
@@ -53,7 +51,7 @@ router.post('/login', async (req: Request, res: Response) => {
   } catch (error) {
     // Demo/Mock login fallback if database is unreachable
     if (email && password) {
-      logger.warn('Database unreachable, using demo login fallback');
+      console.warn('Database unreachable, using demo login fallback');
       res.json({
         token: 'mock-jwt-token-for-demo-purposes',
         user: {

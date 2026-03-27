@@ -2,7 +2,8 @@
 
 ## Overview
 
-This document defines the standard JSON structure for all API responses in the Web3 Student Lab backend to ensure consistency across all endpoints.
+This document defines the standard JSON structure for all API responses in the Web3 Student Lab
+backend to ensure consistency across all endpoints.
 
 ## Standard Response Structure
 
@@ -391,4 +392,5 @@ interface PaginatedResponse<T> {
 }
 ```
 
-This schema ensures consistent, predictable API responses that are easy to consume by frontend applications and third-party integrations.
+This schema ensures consistent, predictable API responses that are easy to consume by frontend
+applications and third-party integrations.

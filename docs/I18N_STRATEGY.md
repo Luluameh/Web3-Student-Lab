@@ -2,11 +2,14 @@
 
 ## Overview
 
-This document outlines the comprehensive internationalization strategy for making the Web3 Student Lab accessible to a global audience through multiple languages. The strategy focuses on scalability, maintainability, and ease of contribution for translators.
+This document outlines the comprehensive internationalization strategy for making the Web3 Student
+Lab accessible to a global audience through multiple languages. The strategy focuses on scalability,
+maintainability, and ease of contribution for translators.
 
 ## Recommended Library: next-intl
 
-After evaluating various i18n solutions for Next.js, we recommend **next-intl** as our internationalization library. Here's why:
+After evaluating various i18n solutions for Next.js, we recommend **next-intl** as our
+internationalization library. Here's why:
 
 ### Why next-intl?
 
@@ -446,6 +449,9 @@ export default function InteractiveComponent() {
 
 ## Conclusion
 
-This i18n strategy provides a solid foundation for making Web3 Student Lab accessible to a global audience. By choosing next-intl and implementing a contributor-friendly workflow, we can build a truly international platform while maintaining high code quality and performance standards.
+This i18n strategy provides a solid foundation for making Web3 Student Lab accessible to a global
+audience. By choosing next-intl and implementing a contributor-friendly workflow, we can build a
+truly international platform while maintaining high code quality and performance standards.
 
-The phased approach allows us to validate our assumptions and iterate based on community feedback, ensuring we build a solution that serves both our users and contributors effectively.
+The phased approach allows us to validate our assumptions and iterate based on community feedback,
+ensuring we build a solution that serves both our users and contributors effectively.

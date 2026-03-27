@@ -1,5 +1,6 @@
-import { jest } from '@jest/globals';
 import request from 'supertest';
+import { jest } from '@jest/globals';
+import type { Express } from 'express';
 
 // Mock OpenAI
 jest.unstable_mockModule('openai', () => {
@@ -7,7 +8,7 @@ jest.unstable_mockModule('openai', () => {
     default: jest.fn().mockImplementation(() => ({
       chat: {
         completions: {
-          // @ts-expect-error
+          // @ts-expect-error mock implementation
           create: jest.fn().mockResolvedValue({
             choices: [
               {
@@ -30,7 +31,7 @@ jest.unstable_mockModule('openai', () => {
 });
 
 describe('Generator API Integration Tests', () => {
-  let app: any; // Explicitly allowed any for supertest compatibility
+  let app: Express;
 
   beforeAll(async () => {
     // Dynamic import to ensure mock is registered first

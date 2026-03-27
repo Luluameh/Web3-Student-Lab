@@ -7,9 +7,6 @@ const connectionString =
   process.env.DATABASE_URL ||
   'postgresql://postgres:postgres@localhost:5432/web3-student-lab?schema=public';
 
-// const pool = new pg.Pool({ connectionString });
-// const adapter = new PrismaPg(pool);
-
 export default defineConfig({
   schema: 'prisma/schema.prisma',
   datasource: {

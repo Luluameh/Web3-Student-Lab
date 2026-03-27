@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { getStats, getStudentDashboard } from './dashboard.service.js';
+import { getStudentDashboard, getStats } from './dashboard.service.js';
 
 const router = Router();
 
@@ -12,7 +12,7 @@ router.get('/stats', async (req: Request, res: Response) => {
   try {
     const stats = await getStats();
     res.json(stats);
-  } catch (_error) {
+  } catch {
     res.status(500).json({ error: 'Failed to fetch platform stats' });
   }
 });
@@ -35,9 +35,8 @@ router.get('/:studentId', async (req: Request, res: Response) => {
     const dashboard = await getStudentDashboard(studentId);
 
     res.json(dashboard);
-  } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    if (message === 'Student not found') {
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message === 'Student not found') {
       res.status(404).json({ error: 'Student Profile not found' });
     } else {
       res.status(500).json({ error: 'Internal server error while fetching dashboard' });

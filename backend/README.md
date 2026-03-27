@@ -66,7 +66,8 @@ Generate a coverage report:
 npm run test:coverage
 ```
 
-Coverage reports will be available in the `coverage/` directory. Open `coverage/lcov-report/index.html` in your browser to view the HTML report.
+Coverage reports will be available in the `coverage/` directory. Open
+`coverage/lcov-report/index.html` in your browser to view the HTML report.
 
 ### Test Structure
 
@@ -280,28 +281,19 @@ NODE_ENV=development
 
 ## 🤝 Contributing
 
-Please read the main [CONTRIBUTING.md](../CONTRIBUTING.md) file for details on how to contribute to this project.
+Please read the main [CONTRIBUTING.md](../CONTRIBUTING.md) file for details on how to contribute to
+this project.
 
 ## 📜 License
 
-MIT License - see the main [LICENSE](../LICENSE) file for details.
-│ ├── db/ # Database client and Prisma setup
-│ ├── routes/ # Modular API routers
-│ │ ├── index.ts # Main router that mounts all feature routers
-│ │ ├── students.ts
-│ │ ├── courses.ts
-│ │ ├── certificates.ts
-│ │ └── enrollments.ts
-│ ├── middleware/ # Express middleware
-│ ├── generated/ # Generated Prisma client (auto-generated)
-│ └── index.ts # Application entry point
-├── prisma/
-│ ├── schema.prisma # Database schema definition
-│ └── migrations/ # Database migrations
-├── prisma.config.ts # Prisma configuration
-├── .env # Environment variables (not committed)
-├── .env.example # Environment variables template
-└── package.json
+MIT License - see the main [LICENSE](../LICENSE) file for details. │ ├── db/ # Database client and
+Prisma setup │ ├── routes/ # Modular API routers │ │ ├── index.ts # Main router that mounts all
+feature routers │ │ ├── students.ts │ │ ├── courses.ts │ │ ├── certificates.ts │ │ └──
+enrollments.ts │ ├── middleware/ # Express middleware │ ├── generated/ # Generated Prisma client
+(auto-generated) │ └── index.ts # Application entry point ├── prisma/ │ ├── schema.prisma # Database
+schema definition │ └── migrations/ # Database migrations ├── prisma.config.ts # Prisma
+configuration ├── .env # Environment variables (not committed) ├── .env.example # Environment
+variables template └── package.json
 
 ````
 
@@ -325,7 +317,8 @@ The database includes the following models:
 
 - **Student**: Student information (id, email, firstName, lastName)
 - **Course**: Course details (id, title, description, instructor, credits)
-- **Certificate**: Certificates issued to students (id, studentId, courseId, certificateHash, status)
+- **Certificate**: Certificates issued to students (id, studentId, courseId, certificateHash,
+  status)
 - **Enrollment**: Student course enrollments (id, studentId, courseId, status)
 
 ## Troubleshooting

@@ -1,6 +1,7 @@
 ## Description
 
-Please provide a brief description of the changes in this pull request. Explain what the PR accomplishes and why it is needed.
+Please provide a brief description of the changes in this pull request. Explain what the PR
+accomplishes and why it is needed.
 
 ## Reference Issues
 
@@ -10,7 +11,8 @@ Fixes # (issue number)
 
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as
+      expected)
 - [ ] Documentation Update
 
 ## Checklist:

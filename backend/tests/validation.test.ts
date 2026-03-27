@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { z } from 'zod';
 import { validateRequest } from '../src/utils/validation.js';
 
@@ -6,16 +6,13 @@ import { validateRequest } from '../src/utils/validation.js';
 const mockRequest = (body: Record<string, unknown>) =>
   ({
     body,
-  }) as Request;
+  }) as unknown as Request;
 
 const mockResponse = () => {
-  const res = {
-    status: jest.fn(),
-    json: jest.fn(),
-  } as unknown as { status: jest.Mock; json: jest.Mock };
-  res.status.mockReturnValue(res);
-  res.json.mockReturnValue(res);
-  return res as unknown as Response;
+  const res: Record<string, jest.Mock> = {};
+  res.status = jest.fn().mockReturnValue(res);
+  res.json = jest.fn().mockReturnValue(res);
+  return res;
 };
 
 const mockNext = jest.fn();
@@ -75,7 +72,8 @@ describe('Validation Middleware', () => {
     it('should return 500 error for unexpected errors', () => {
       const req = mockRequest({});
       const res = mockResponse();
-      const middleware = validateRequest(null as unknown as z.ZodSchema);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const middleware = validateRequest(null as any);
 
       middleware(req, res, mockNext);
 

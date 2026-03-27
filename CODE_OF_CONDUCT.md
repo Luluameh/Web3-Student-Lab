@@ -2,7 +2,11 @@
 
 ## Our Pledge
 
-In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
+In the interest of fostering an open and welcoming environment, we as contributors and maintainers
+pledge to making participation in our project and our community a harassment-free experience for
+everyone, regardless of age, body size, disability, ethnicity, sex characteristics, gender identity
+and expression, level of experience, education, socio-economic status, nationality, personal
+appearance, race, religion, or sexual identity and orientation.
 
 ## Our Standards
 
@@ -23,7 +27,8 @@ Examples of unacceptable behavior by participants include:
 
 ## Helping vs Hand-holding
 
-As a student-focused learning community, we strive to empower learners while avoiding dependency. Here's how we balance helping with fostering independence:
+As a student-focused learning community, we strive to empower learners while avoiding dependency.
+Here's how we balance helping with fostering independence:
 
 ### Examples of Helpful Support ✅
 
@@ -41,11 +46,13 @@ As a student-focused learning community, we strive to empower learners while avo
 - Creating dependencies on specific individuals
 - Undermining the learning process by shortcutting challenges
 
-Remember: The goal is learning, not just completion. We celebrate the journey of discovery and growth.
+Remember: The goal is learning, not just completion. We celebrate the journey of discovery and
+growth.
 
 ## Constructive Feedback
 
-In our educational environment, feedback is a gift that helps us all grow. We prioritize feedback that is specific, actionable, and kind.
+In our educational environment, feedback is a gift that helps us all grow. We prioritize feedback
+that is specific, actionable, and kind.
 
 ### Guidelines for Giving Feedback
 
@@ -71,4 +78,6 @@ In our educational environment, feedback is a gift that helps us all grow. We pr
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team. All complaints will be reviewed and investigated and will result in a response that is deemed necessary and appropriate to the circumstances.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting
+the project team. All complaints will be reviewed and investigated and will result in a response
+that is deemed necessary and appropriate to the circumstances.

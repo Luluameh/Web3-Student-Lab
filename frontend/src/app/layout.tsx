@@ -1,24 +1,25 @@
-import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
-import { AuthProvider } from '@/contexts/AuthContext';
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: 'Web3 Student Lab - Blockchain Education Platform',
-  description: 'Learn blockchain development with hands-on experience using Soroban smart contracts and Stellar blockchain',
+  title: "Web3 Student Lab - Blockchain Education Platform",
+  description:
+    "Learn blockchain development with hands-on experience using Soroban smart contracts and Stellar blockchain",
 };
 
-import Navbar from '@/components/layout/Navbar';
+import Navbar from "@/components/layout/Navbar";
 
 export default function RootLayout({
   children,
@@ -27,12 +28,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white min-h-screen`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white min-h-screen`}
+      >
         <AuthProvider>
           <Navbar />
-          <main className="flex-grow">
-            {children}
-          </main>
+          <main className="flex-grow">{children}</main>
         </AuthProvider>
       </body>
     </html>
