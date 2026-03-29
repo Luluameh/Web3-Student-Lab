@@ -94,9 +94,7 @@ impl RsTokenContract {
             panic_with_error!(&env, TokenError::NotAuthorized);
         }
 
-        env.storage()
-            .instance()
-            .set(&DataKey::MintPaused, &paused);
+        env.storage().instance().set(&DataKey::MintPaused, &paused);
     }
 
     /// Mints non-transferable RS-Tokens to a student for a specific token ID.
@@ -136,11 +134,7 @@ impl RsTokenContract {
 
     /// Gets the balances of multiple token IDs for multiple students in a batch.
     /// Returns a vector of balances in the same order as the input.
-    pub fn balance_of_batch(
-        env: Env,
-        students: Vec<Address>,
-        token_ids: Vec<u32>,
-    ) -> Vec<i128> {
+    pub fn balance_of_batch(env: Env, students: Vec<Address>, token_ids: Vec<u32>) -> Vec<i128> {
         let student_count = students.len();
         let token_id_count = token_ids.len();
 
