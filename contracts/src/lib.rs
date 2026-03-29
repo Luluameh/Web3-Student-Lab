@@ -120,6 +120,8 @@ pub enum CertError {
     CannotRevokeProtectedInstructor = 15,
     InvalidSignature = 16,
     InvalidAmount = 17,
+    StringTooLong = 18,
+    InvalidCharacter = 19,
 }
 
 const DEFAULT_MINT_CAP: u32 = 1000;
@@ -462,6 +464,8 @@ impl CertificateContract {
         Self::require_not_paused(&env);
         Self::require_instructor(&env, &instructor);
 
+        Self::validate_string(&env, &course_name, 128);
+
         let student_count = students.len();
         let available = Self::check_and_update_mint_tracking(&env);
         if student_count > available {
@@ -518,6 +522,8 @@ impl CertificateContract {
         instructor.require_auth();
         Self::require_not_paused(&env);
         Self::require_instructor(&env, &instructor);
+
+        Self::validate_string(&env, &course, 128);
 
         // Validate input lengths match
         if symbols.len() != students.len() {
@@ -628,6 +634,8 @@ impl CertificateContract {
         // instructor.require_auth(); // No longer needed as we're verifying the signature manually
         Self::require_not_paused(&env);
         Self::require_instructor(&env, &call_data.instructor);
+
+        Self::validate_string(&env, &call_data.course_name, 128);
 
         // Verify the signature on the call data
         // For Ed25519 verification, we need the public key.
@@ -784,6 +792,23 @@ impl CertificateContract {
 
         env.events()
             .publish((Symbol::new(&env, "did_removed"),), (caller, student));
+    }
+
+    /// Enforce a max byte length and reject non-printable ASCII characters (< 0x20 or == 0x7F).
+    fn validate_string(env: &Env, s: &String, max_len: u32) {
+        if s.len() > max_len {
+            panic_with_error!(env, CertError::StringTooLong);
+        }
+        let n = s.len() as usize;
+        let mut buf = [0u8; 256];
+        // max_len is caller-controlled; we only need to read up to `n` bytes.
+        // buf is 256 bytes — callers must not pass max_len > 256.
+        s.copy_into_slice(&mut buf[..n]);
+        for &byte in &buf[..n] {
+            if byte < 0x20 || byte == 0x7F {
+                panic_with_error!(env, CertError::InvalidCharacter);
+            }
+        }
     }
 
     /// `did:soroban:` prefix, max length 256 bytes.

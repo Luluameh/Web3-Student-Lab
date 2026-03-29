@@ -2,7 +2,7 @@ use super::*;
 use soroban_sdk::{
     symbol_short,
     testutils::{Address as _, Events, Ledger},
-    vec, Address, Bytes, Env, FromVal, String, Symbol, IntoVal,
+    vec, Address, Env, FromVal, String, Symbol,
 };
 
 fn setup() -> (
@@ -794,4 +794,63 @@ fn batch_issue_gas_efficiency() {
         assert!(!cert.revoked);
         assert_eq!(cert.issue_date, env.ledger().timestamp());
     }
+}
+
+// ---------------------------------------------------------------------------
+// String validation (storage bloat prevention)
+// ---------------------------------------------------------------------------
+
+#[test]
+#[should_panic]
+fn issue_rejects_course_name_exceeding_max_length() {
+    let (env, instructor, _, _, client) = setup();
+    // 129 'a' characters — one over the 128-byte limit
+    let long_name = String::from_str(&env, &"a".repeat(129));
+    client.issue(
+        &instructor,
+        &symbol_short!("LONG"),
+        &vec![&env, Address::generate(&env)],
+        &long_name,
+    );
+}
+
+#[test]
+#[should_panic]
+fn issue_rejects_course_name_with_non_printable_chars() {
+    let (env, instructor, _, _, client) = setup();
+    // Embed a null byte (0x00) — non-printable
+    let bad_name = String::from_bytes(&env, &[b'H', b'i', 0x00]);
+    client.issue(
+        &instructor,
+        &symbol_short!("CTRL"),
+        &vec![&env, Address::generate(&env)],
+        &bad_name,
+    );
+}
+
+#[test]
+fn issue_accepts_course_name_at_max_length() {
+    let (env, instructor, _, _, client) = setup();
+    // Exactly 128 printable characters — should succeed
+    let max_name = String::from_str(&env, &"a".repeat(128));
+    let issued = client.issue(
+        &instructor,
+        &symbol_short!("MAXOK"),
+        &vec![&env, Address::generate(&env)],
+        &max_name,
+    );
+    assert_eq!(issued.len(), 1);
+}
+
+#[test]
+#[should_panic]
+fn batch_issue_rejects_course_name_exceeding_max_length() {
+    let (env, instructor, _, _, client) = setup();
+    let long_name = String::from_str(&env, &"b".repeat(129));
+    client.batch_issue(
+        &instructor,
+        &vec![&env, symbol_short!("BLG")],
+        &vec![&env, Address::generate(&env)],
+        &long_name,
+    );
 }
